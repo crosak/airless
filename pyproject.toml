@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "airless"
+description = "Synthetic spectrum modelling for airless rocky bodies"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Can Akin", email = "akin_can@hotmail.com" },
+    { name = "Leonardos Gkouvelis", email = "l.gkouvelis@uliege.be" },
+]
+license = { text = "MIT License" }
+dependencies = [
+    "numpy",
+    "astropy>=3.2"
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-cov"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+write_to = "src/airless/_version.py"

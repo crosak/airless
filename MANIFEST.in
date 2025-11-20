@@ -1,0 +1,7 @@
+prune build
+prune docs/_build
+global-exclude *.pyc *.o
+recursive-include src/airless/data *
+recursive-include docs *.md
+exclude tests/*
+exclude examples/*
