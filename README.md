@@ -6,7 +6,7 @@
 
 If you use this code, please cite: 
 
-- [Gkouvelis, L., Pozuelos, F. J., Drant, T., Farhat, M., Tian, M., and Akın, C., vol. 699, Art. no. A378, EDP, 2025. doi:10.1051/0004-6361/202554192](https://doi.org/10.1051/0004-6361/202554192)
+- [Gkouvelis, L., Pozuelos, F. J., Drant, T., Farhat, M., Tian, M., and Akın, C., vol. 699, Art. no. A378, EDP, 2025](https://doi.org/10.1051/0004-6361/202554192)
 
 - Akin & Gkouvelis JOSS submission in the works!
 
@@ -14,4 +14,4 @@ Current code owners: Leonardos Gkouvelis, Can Akin
 
 ## Instructions for installing airless
 
-Under development 
+This code is currently under heavy restructuring for a more general purpose use! As soon as the base package is ready, installation instructions will be provided below.
