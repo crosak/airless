@@ -1,6 +1,6 @@
 # airless # 
 
-## Modelling of Bare Rock Emission Spectra
+## Modelling of Bare Rock Reflection & Emission Spectra
 
 *airless* is a code developed to model a bare rock (or a very thin atmosphere) scenario, accounting for the characteristics of a given surface profile's interaction with electromagnetic radiation, assuming no significant heat redistribution. It can be used either as a forward model to produce planetary emission spectra or in inference mode to retrieve planetary reflectance characteristics.
 
