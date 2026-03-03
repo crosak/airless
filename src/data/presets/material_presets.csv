@@ -1,0 +1,37 @@
+metal-rich,'Iron_Oxide_Ferrihydrite_Magnetite',0.7
+metal-rich,'Magnetite',0.2
+metal-rich,'Hematite',0.1
+Ultramafic,'Olivine',1.0
+Feldspathic,'Plagioclasse_felspar',0.8
+Feldspathic,'Quartz',0.2
+Moon regolith,'Basalt',0.3
+Moon regolith,'Fayalite',0.1
+Moon regolith,'Pigeonite',0.1
+Moon regolith,'Plagioclasse_felspar',0.2
+Moon regolith,'Hematite',0.1
+Moon regolith,'Obsidian',0.1
+Moon regolith,'Glass_Silica_Clay_Sulfate_Iron_Oxide',0.1
+Mercury regolith,'Basalt',0.4
+Mercury regolith,'Plagioclasse_felspar',0.2
+Mercury regolith,'Augite',0.15
+Mercury regolith,'Olivine',0.15
+Mercury regolith,'Obsidian',0.10
+S-type asteroid regolith,'Fayalite',0.3
+S-type asteroid regolith,'Augite',0.1
+S-type asteroid regolith,'Plagioclasse_felspar',0.2
+S-type asteroid regolith,'Magnetite',0.15
+S-type asteroid regolith,'Basalt',0.1
+S-type asteroid regolith,'Glass_Silica_Clay_Sulfate_Iron_Oxide',0.15
+M-type asteroid regolith,'Magnetite',0.5
+M-type asteroid regolith,'Olivine',0.3
+M-type asteroid regolith,'Basalt',0.05
+M-type asteroid regolith,'Hematite',0.1
+M-type asteroid regolith,'Obsidian',0.05
+Andesite regolith,'Plagioclasse_felspar',0.5
+Andesite regolith,'Pigeonite',0.2
+Andesite regolith,'Biotite',0.15
+Andesite regolith,'Quartz',0.15
+Basaltic,'Basalt',0.85
+Basaltic,'Olivine',0.1
+Basaltic,'Plagioclasse_felspar',0.05
+Wustatite,'Obsidian',1.0
