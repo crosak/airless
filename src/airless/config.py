@@ -26,6 +26,7 @@ Configuration dataclasses for stars, orbits, planets and experiments.
 
 from __future__ import annotations
 
+import csv
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -71,4 +72,63 @@ class ExperimentConfig:
     mode: str = "forward" 
     lab_data_dir: str | Path | None = None
     output_dir: str | Path | None = None
+
+# TODO: Introduce meaningful comments.    
+class CompositionLibrary:
+    def __init__(self, preset_composition: str, preset_file: str | Path | None = None) -> None:
+        self.preset_composition = preset_composition
+        if preset_file is None:
+            self.preset_file = (
+                Path(__file__).resolve().parent.parent / "data" / "presets" / "material_presets.csv"
+            )
+        else:
+            self.preset_file = Path(preset_file)
+        self.materials_: list[str] = []
+        self.weights_: list[float] = []
+        
+    def load_composition(self) -> tuple[list[str], list[float]]:
+        self.materials_.clear()
+        self.weights_.clear()
+        available_presets: set[str] = set()
+
+        with self.preset_file.open("r", newline="", encoding="utf-8") as file:
+            reader = csv.reader(file, delimiter=",", quotechar="'", skipinitialspace=True)
+            for line_no, row in enumerate(reader, start=1):
+                if not row:
+                    continue
+
+                preset_name = row[0].strip()
+                if not preset_name:
+                    continue
+
+                available_presets.add(preset_name)
+                if preset_name != self.preset_composition:
+                    continue
+
+                if len(row) != 3:
+                    raise ValueError(
+                        f"Malformed preset row at line {line_no}: expected 3 columns "
+                        f"(preset, material, weight)."
+                    )
+
+                material_name = row[1].strip()
+                if not material_name:
+                    raise ValueError(f"Empty material name at line {line_no}.")
+
+                try:
+                    weight_value = float(row[2])
+                except ValueError as exc:
+                    raise ValueError(f"Invalid weight value at line {line_no}: {row[2]!r}.") from exc
+
+                self.materials_.append(material_name)
+                self.weights_.append(weight_value)
+
+        if not self.materials_:
+            available_str = ", ".join(sorted(available_presets))
+            raise ValueError(
+                f"Unknown preset composition {self.preset_composition!r}. "
+                f"Available presets: {available_str}."
+            )
+
+        return self.materials_, self.weights_
     

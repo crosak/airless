@@ -1,3 +1,25 @@
+# MIT License
+#
+# Copyright (c) 2025 Leonardos Gkouvelis, Can Akin
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from airless.config import (
     ExperimentConfig,
     ModelOptions,
@@ -7,6 +29,7 @@ from airless.config import (
     SurfaceCompositionConfig,
 )
 from airless.model import ForwardExperiment, create_forward_experiment
+from pathlib import Path
 import pytest
 
 # Check whether the ForwardExperiment() instance gets created correctly (Smoke test)
@@ -163,6 +186,40 @@ def test_factory_populates_defaults_correctly():
     assert experiment.config.lab_data_dir == "data/"
     assert experiment.config.output_dir == "out/"
 
+# Test the preset composition configurator of the factory works properly
+def test_factory_uses_preset_composition():
+    preset_file = Path("tests/data/presets/material_presets.csv")
+    experiment = create_forward_experiment(
+        star_temperature=6000.0,
+        star_radius=1.0,
+        semi_major_axis=1.5,
+        distance=10.0,
+        planet_radius=2.0,
+        gravity=9.8,
+        rotation_period=24.0,
+        preset_composition="Ultramafic",
+        preset_file=preset_file,
+    )
+
+    assert experiment.config.surface.materials == ["Olivine"]
+    assert experiment.config.surface.weights == [1.0]
+
+
+def test_factory_unknown_preset_raises():
+    preset_file = Path("tests/data/presets/material_presets.csv")
+    with pytest.raises(ValueError, match="Unknown preset composition"):
+        create_forward_experiment(
+            star_temperature=6000.0,
+            star_radius=1.0,
+            semi_major_axis=1.5,
+            distance=10.0,
+            planet_radius=2.0,
+            gravity=9.8,
+            rotation_period=24.0,
+            preset_composition="NotARealPreset",
+            preset_file=preset_file,
+        )
+# TODO: Add bad inputs for the composition presets.
 # Test if our factory behaves correctly if given bad inputs.
 BASE_ARGS = {
     "star_temperature": 6000.0,
