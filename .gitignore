@@ -1,2 +1,16 @@
-# Lab data files
-src/airless/data/*
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor settings
+.vscode/
+**/.vscode/
+
+# Lab data (keep CI fixtures in tests/data)
+src/data/
+src/data/**
+
+# Python build/cache artifacts
+__pycache__/
+**/__pycache__/
+*.pyc
