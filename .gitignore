@@ -7,8 +7,9 @@
 **/.vscode/
 
 # Lab data (keep CI fixtures in tests/data)
-src/data/
 src/data/**
+!src/data/presets/
+!src/data/presets/**
 
 # Python build/cache artifacts
 __pycache__/
