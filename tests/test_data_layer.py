@@ -27,12 +27,13 @@ from airless.config import (
     PlanetConfig,
     StarConfig,
     SurfaceCompositionConfig,
+    MaterialLibrary
 )
 from airless.model import ForwardExperiment, create_forward_experiment
 from pathlib import Path
 import pytest
 
-# Check whether the ForwardExperiment() instance gets created correctly (Smoke test)
+# Check whether the ForwardExperiment instance gets created correctly (Smoke test)
 def test_forward_experiment_can_be_created():
     config = ExperimentConfig(
         star=StarConfig(radius=1.0, temperature=5778.0, metallicity=0.0),
@@ -44,7 +45,7 @@ def test_forward_experiment_can_be_created():
         ),
         planet=PlanetConfig(radius=1.0, gravity=9.8, rotation_period=24.0),
         surface=SurfaceCompositionConfig(
-            materials=["basalt"],
+            materials=["Basalt"],
             weights=[1.0],
             reference_str=None,
         ),
@@ -77,7 +78,7 @@ def test_factory_populates_config_correctly():
     gravity_input = 9.8
     rotation_period_input = 24.0
     
-    materials_input = ["basalt"]
+    materials_input = ["Basalt"]
     weights_input = [1.0]
     reference_str_input = None
     
@@ -154,7 +155,7 @@ def test_factory_populates_defaults_correctly():
     gravity_input = 9.8
     rotation_period_input = 24.0
     
-    materials_input = ["basalt"]
+    materials_input = ["Basalt"]
     weights_input = [1.0]
     
     experiment = create_forward_experiment(
@@ -220,6 +221,9 @@ def test_factory_unknown_preset_raises():
             preset_file=preset_file,
         )
 # TODO: Add bad inputs for the composition presets.
+#   1. Create a temporary file with a "bad" preset composition (e.g, weights don't sum up to 1)
+#   2. Create a temporary file with missing values or NaNs.
+
 # Test if our factory behaves correctly if given bad inputs.
 BASE_ARGS = {
     "star_temperature": 6000.0,
@@ -229,7 +233,7 @@ BASE_ARGS = {
     "planet_radius": 2.0,
     "gravity": 9.8,
     "rotation_period": 24.0,
-    "materials": ["basalt"],
+    "materials": ["Basalt"],
     "weights": [1.0],
 }
 @pytest.mark.parametrize(
@@ -266,3 +270,32 @@ def test_bad_inputs_for_factory(overrides, msg):
     kwargs.update(overrides)
     with pytest.raises(ValueError, match=msg):
         create_forward_experiment(**kwargs)
+
+# TODO: Split this test into multiple tests
+## Smoke test to ensure object gets initialized correctly. Factory test wouldn't work since we initialize this object through the run() method
+## Defaults test
+## Happy path test with good inputs
+## Bad input tests for error handling (Missing files, multiple .tab files, case mismatch, no match)
+## Unit tests for the get() method
+## Idempotency test (Call get() multiple times and ensure you get the same output)
+## Unit tests for the load() method
+def test_material_library_initialization():
+    """
+    Checking whether the basic initialization of the MaterialLibrary object works.
+    This test is too broad to be helpful right now, I will chop it up to multiple parts later.
+    """
+    lab_data_dir: str | Path = Path("tests/data/")
+    materials = ['Basalt']
+    material_object = MaterialLibrary(lab_data_dir = lab_data_dir, materials= materials)
+    
+    # Check whether objects get initialized correctly
+    assert material_object.lab_data_dir_ == lab_data_dir
+    assert material_object.materials_ == materials
+    
+    # Check defaults as well
+    assert material_object.lab_data_format_ == "*.tab"
+    assert material_object.special_dirs_ == ["presets"]
+    
+    # Check the directory parser
+    material_object.get()
+    assert material_object.material_library_ == {"Basalt":"tests/data/Basalt/bir1dp001a.tab"}

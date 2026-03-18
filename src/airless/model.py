@@ -27,6 +27,7 @@ from .config import (
     StarConfig, OrbitConfig, PlanetConfig,
     SurfaceCompositionConfig, ModelOptions,
     ExperimentConfig, CompositionLibrary,
+    MaterialLibrary,
 )
 from pathlib import Path
 import numpy as np
@@ -82,7 +83,12 @@ class ForwardExperiment:
             raise ValueError("Chosen phase function option is not available.")
         
     # def run(self):
-        # Get/Constuct MaterialLibrary() object
+        # Construct the material library
+        # lab_data_dir_ = self.config.lab_data_dir
+        # spectra_loader = MaterialLibrary(lab_data_dir=lab_data_dir_)
+        # spectra_loader.get()
+        # Load lab spectra data
+        # spectra_loader.load(materials=materials_)
         # Build mixed reflectance (?)
         # Bin the lab data
         
